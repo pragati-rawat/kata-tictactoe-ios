@@ -20,21 +20,21 @@ struct GameRulesEngineTests {
         // When
         let isGameOver = engine.evaluateGameState(isBoardFull: boardIsFull)
         // Then
-        #expect(isGameOver == true, "Failed at evaluating game progress for boardValue \(boardIsFull)")
+        #expect(isGameOver == .over, "Failed at evaluating game progress for boardValue \(boardIsFull)")
     }
     
     @Test("Test game is ongoing when board is not full")
     func gameIsOngoing_whenBoardIsNotFull() {
         let boardIsFull = false
         let isGameOver = engine.evaluateGameState(isBoardFull: boardIsFull)
-        #expect(isGameOver == false, "Failed at evaluating boardisNOtFull for boardValue \(boardIsFull)")
+        #expect(isGameOver == .ongoing, "Failed at evaluating boardisNOtFull for boardValue \(boardIsFull)")
     }
 
     @Test("Test game is over when board is full")
     func gameIsOver_forAnyFullBoard() {
         let inputs = [true, true, true]
         for isFull in inputs {
-            #expect(engine.evaluateGameState(isBoardFull: isFull) == true)
+            #expect(engine.evaluateGameState(isBoardFull: isFull) == .over)
         }
     }
     
@@ -42,6 +42,6 @@ struct GameRulesEngineTests {
     func gameIsNotOver_whenBoardHasEmptyCells() {
         let boardIsFull = false
         let isGameOver = engine.evaluateGameState(isBoardFull: boardIsFull)
-        #expect(isGameOver == false, "Failed at evaluating boardisNOtFull for emptycells \(boardIsFull)")
+        #expect(isGameOver == .ongoing, "Failed at evaluating boardisNOtFull for emptycells \(boardIsFull)")
     }
 }

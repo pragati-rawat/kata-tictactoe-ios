@@ -20,15 +20,16 @@ struct GameRulesEngineTests {
         // When
         let isGameOver = engine.evaluateGameState(
             isBoardFull: boardIsFull,
-            topLeftFilledByCurrentPlayer: false,
-            topMiddleFilledByCurrentPlayer: false,
-            topRightFilledByCurrentPlayer: false,
-            middleLeftFilledByCurrentPlayer: false,
-            middleMiddleFilledByCurrentPlayer: false,
-            middleRightFilledByCurrentPlayer: false,
-            bottomLeftFilledByCurrentPlayer: false,
-            bottomMiddleFilledByCurrentPlayer: false,
-            bottomRightFilledByCurrentPlayer: false
+            currentPlayer: .x,
+            topLeft: .empty,
+            topMiddle: .empty,
+            topRight: .empty,
+            middleLeft: .empty,
+            middleMiddle: .empty,
+            middleRight: .empty,
+            bottomLeft: .empty,
+            bottomMiddle: .empty,
+            bottomRight: .empty
         )
         // Then
         #expect(isGameOver == .draw, "Failed at evaluating game progress for boardValue \(boardIsFull)")
@@ -39,15 +40,16 @@ struct GameRulesEngineTests {
         let boardIsFull = false
         let isGameOver = engine.evaluateGameState(
             isBoardFull: boardIsFull,
-            topLeftFilledByCurrentPlayer: false,
-            topMiddleFilledByCurrentPlayer: false,
-            topRightFilledByCurrentPlayer: false,
-            middleLeftFilledByCurrentPlayer: false,
-            middleMiddleFilledByCurrentPlayer: false,
-            middleRightFilledByCurrentPlayer: false,
-            bottomLeftFilledByCurrentPlayer: false,
-            bottomMiddleFilledByCurrentPlayer: false,
-            bottomRightFilledByCurrentPlayer: false
+            currentPlayer: .x,
+            topLeft: .empty,
+            topMiddle: .empty,
+            topRight: .empty,
+            middleLeft: .empty,
+            middleMiddle: .empty,
+            middleRight: .empty,
+            bottomLeft: .empty,
+            bottomMiddle: .empty,
+            bottomRight: .empty
         )
         #expect(isGameOver == .ongoing, "Failed at evaluating boardisNOtFull for boardValue \(boardIsFull)")
     }
@@ -58,15 +60,16 @@ struct GameRulesEngineTests {
         for isFull in inputs {
             #expect(engine.evaluateGameState(
                 isBoardFull: isFull,
-                topLeftFilledByCurrentPlayer: false,
-                topMiddleFilledByCurrentPlayer: false,
-                topRightFilledByCurrentPlayer: false,
-                middleLeftFilledByCurrentPlayer: false,
-                middleMiddleFilledByCurrentPlayer: false,
-                middleRightFilledByCurrentPlayer: false,
-                bottomLeftFilledByCurrentPlayer: false,
-                bottomMiddleFilledByCurrentPlayer: false,
-                bottomRightFilledByCurrentPlayer: false
+                currentPlayer: .x,
+                topLeft: .empty,
+                topMiddle: .empty,
+                topRight: .empty,
+                middleLeft: .empty,
+                middleMiddle: .empty,
+                middleRight: .empty,
+                bottomLeft: .empty,
+                bottomMiddle: .empty,
+                bottomRight: .empty
             ) == .draw)
         }
     }
@@ -76,15 +79,16 @@ struct GameRulesEngineTests {
         let boardIsFull = false
         let isGameOver = engine.evaluateGameState(
             isBoardFull: boardIsFull,
-            topLeftFilledByCurrentPlayer: false,
-            topMiddleFilledByCurrentPlayer: false,
-            topRightFilledByCurrentPlayer: false,
-            middleLeftFilledByCurrentPlayer: false,
-            middleMiddleFilledByCurrentPlayer: false,
-            middleRightFilledByCurrentPlayer: false,
-            bottomLeftFilledByCurrentPlayer: false,
-            bottomMiddleFilledByCurrentPlayer: false,
-            bottomRightFilledByCurrentPlayer: false
+            currentPlayer: .x,
+            topLeft: .empty,
+            topMiddle: .empty,
+            topRight: .empty,
+            middleLeft: .empty,
+            middleMiddle: .empty,
+            middleRight: .empty,
+            bottomLeft: .empty,
+            bottomMiddle: .empty,
+            bottomRight: .empty
         )
         #expect(isGameOver == .ongoing, "Failed at evaluating boardisNOtFull for emptycells \(boardIsFull)")
     }
@@ -93,41 +97,43 @@ struct GameRulesEngineTests {
     func gameIsOver_whenTopRowIsFilled() {
         let result = engine.evaluateGameState(
             isBoardFull: false,
-            topLeftFilledByCurrentPlayer: true,
-            topMiddleFilledByCurrentPlayer: true,
-            topRightFilledByCurrentPlayer: true,
-            middleLeftFilledByCurrentPlayer: false,
-            middleMiddleFilledByCurrentPlayer: false,
-            middleRightFilledByCurrentPlayer: false,
-            bottomLeftFilledByCurrentPlayer: false,
-            bottomMiddleFilledByCurrentPlayer: false,
-            bottomRightFilledByCurrentPlayer: false
+            currentPlayer: .x,
+            topLeft: .x,
+            topMiddle: .x,
+            topRight: .x,
+            middleLeft: .empty,
+            middleMiddle: .empty,
+            middleRight: .empty,
+            bottomLeft: .empty,
+            bottomMiddle: .empty,
+            bottomRight: .empty
         )
         #expect(result == .win)
     }
     
     @Test("Test game is over when top row if filled")
     func topRowWinGame_whenTopRowIsFillerWithArgs() {
-        let cases: [(Bool, Bool, Bool, GameResult)] = [
-            (true, true, true, .win),
-            (true, true, false, .ongoing),
-            (true, false, true, .ongoing),
-            (false, true, true, .ongoing),
-            (false, false, false, .ongoing)
+        let cases: [(CellState, CellState, CellState, GameResult)] = [
+            (.x, .x, .x, .win),
+            (.x, .x, .empty, .ongoing),
+            (.x, .empty, .x, .ongoing),
+            (.empty, .x, .x, .ongoing),
+            (.empty, .empty, .empty, .ongoing)
         ]
         
         for (left, middle, right, expected) in cases {
             let result = engine.evaluateGameState(
                 isBoardFull: false,
-                topLeftFilledByCurrentPlayer: left,
-                topMiddleFilledByCurrentPlayer: middle,
-                topRightFilledByCurrentPlayer: right,
-                middleLeftFilledByCurrentPlayer: false,
-                middleMiddleFilledByCurrentPlayer: false,
-                middleRightFilledByCurrentPlayer: false,
-                bottomLeftFilledByCurrentPlayer: false,
-                bottomMiddleFilledByCurrentPlayer: false,
-                bottomRightFilledByCurrentPlayer: false
+                currentPlayer: .x,
+                topLeft: left,
+                topMiddle: middle,
+                topRight: right,
+                middleLeft: .empty,
+                middleMiddle: .empty,
+                middleRight: .empty,
+                bottomLeft: .empty,
+                bottomMiddle: .empty,
+                bottomRight: .empty
             )
             #expect(result == expected)
         }
@@ -137,15 +143,16 @@ struct GameRulesEngineTests {
     func gameIsDraw_whenBoardIsFull_andNoWin() {
         let result = engine.evaluateGameState(
             isBoardFull: true,
-            topLeftFilledByCurrentPlayer: false,
-            topMiddleFilledByCurrentPlayer: false,
-            topRightFilledByCurrentPlayer: false,
-            middleLeftFilledByCurrentPlayer: false,
-            middleMiddleFilledByCurrentPlayer: false,
-            middleRightFilledByCurrentPlayer: false,
-            bottomLeftFilledByCurrentPlayer: false,
-            bottomMiddleFilledByCurrentPlayer: false,
-            bottomRightFilledByCurrentPlayer: false
+            currentPlayer: .x,
+            topLeft: .empty,
+            topMiddle: .empty,
+            topRight: .empty,
+            middleLeft: .empty,
+            middleMiddle: .empty,
+            middleRight: .empty,
+            bottomLeft: .empty,
+            bottomMiddle: .empty,
+            bottomRight: .empty
         )
         
         #expect(result == .draw)
@@ -155,15 +162,16 @@ struct GameRulesEngineTests {
     func gameIsOngoing_whenBoardIsNotFull_andNoWin() {
         let result = engine.evaluateGameState(
             isBoardFull: false,
-            topLeftFilledByCurrentPlayer: false,
-            topMiddleFilledByCurrentPlayer: false,
-            topRightFilledByCurrentPlayer: false,
-            middleLeftFilledByCurrentPlayer: false,
-            middleMiddleFilledByCurrentPlayer: false,
-            middleRightFilledByCurrentPlayer: false,
-            bottomLeftFilledByCurrentPlayer: false,
-            bottomMiddleFilledByCurrentPlayer: false,
-            bottomRightFilledByCurrentPlayer: false
+            currentPlayer: .x,
+            topLeft: .empty,
+            topMiddle: .empty,
+            topRight: .empty,
+            middleLeft: .empty,
+            middleMiddle: .empty,
+            middleRight: .empty,
+            bottomLeft: .empty,
+            bottomMiddle: .empty,
+            bottomRight: .empty
         )
         
         #expect(result == .ongoing)
@@ -173,15 +181,16 @@ struct GameRulesEngineTests {
     func gameIsWin_whenTopRowIsFilled() {
         let result = engine.evaluateGameState(
             isBoardFull: false,
-            topLeftFilledByCurrentPlayer: true,
-            topMiddleFilledByCurrentPlayer: true,
-            topRightFilledByCurrentPlayer: true,
-            middleLeftFilledByCurrentPlayer: false,
-            middleMiddleFilledByCurrentPlayer: false,
-            middleRightFilledByCurrentPlayer: false,
-            bottomLeftFilledByCurrentPlayer: false,
-            bottomMiddleFilledByCurrentPlayer: false,
-            bottomRightFilledByCurrentPlayer: false
+            currentPlayer: .x,
+            topLeft: .x,
+            topMiddle: .x,
+            topRight: .x,
+            middleLeft: .empty,
+            middleMiddle: .empty,
+            middleRight: .empty,
+            bottomLeft: .empty,
+            bottomMiddle: .empty,
+            bottomRight: .empty
         )
         
         #expect(result == .win)
@@ -191,21 +200,22 @@ struct GameRulesEngineTests {
     func gameIsWin_whenMiddleRowIsFilled() {
         let result = engine.evaluateGameState(
             isBoardFull: false,
+            currentPlayer: .x,
             
             // top row
-            topLeftFilledByCurrentPlayer: false,
-            topMiddleFilledByCurrentPlayer: false,
-            topRightFilledByCurrentPlayer: false,
+            topLeft: .empty,
+            topMiddle: .empty,
+            topRight: .empty,
             
             // second row
-            middleLeftFilledByCurrentPlayer: true,
-            middleMiddleFilledByCurrentPlayer: true,
-            middleRightFilledByCurrentPlayer: true,
+            middleLeft: .x,
+            middleMiddle: .x,
+            middleRight: .x,
             
             // bottom row
-            bottomLeftFilledByCurrentPlayer: false,
-            bottomMiddleFilledByCurrentPlayer: false,
-            bottomRightFilledByCurrentPlayer: false
+            bottomLeft: .empty,
+            bottomMiddle: .empty,
+            bottomRight: .empty
         )
         
         #expect(result == .win)
@@ -215,21 +225,22 @@ struct GameRulesEngineTests {
     func gameIsOngoing_whenMiddleRowIsNotComplete() {
         let result = engine.evaluateGameState(
             isBoardFull: false,
+            currentPlayer: .x,
 
             // top row
-            topLeftFilledByCurrentPlayer: false,
-            topMiddleFilledByCurrentPlayer: false,
-            topRightFilledByCurrentPlayer: false,
+            topLeft: .empty,
+            topMiddle: .empty,
+            topRight: .empty,
 
             // second row
-            middleLeftFilledByCurrentPlayer: true,
-            middleMiddleFilledByCurrentPlayer: false,
-            middleRightFilledByCurrentPlayer: true,
+            middleLeft: .x,
+            middleMiddle: .empty,
+            middleRight: .x,
 
             // bottom row
-            bottomLeftFilledByCurrentPlayer: false,
-            bottomMiddleFilledByCurrentPlayer: false,
-            bottomRightFilledByCurrentPlayer: false
+            bottomLeft: .empty,
+            bottomMiddle: .empty,
+            bottomRight: .empty
         )
 
         #expect(result == .ongoing)
@@ -239,21 +250,22 @@ struct GameRulesEngineTests {
     func gameIsWin_whenThirdRowIsFilled() {
         let result = engine.evaluateGameState(
             isBoardFull: false,
+            currentPlayer: .x,
 
             // top row
-            topLeftFilledByCurrentPlayer: false,
-            topMiddleFilledByCurrentPlayer: false,
-            topRightFilledByCurrentPlayer: false,
+            topLeft: .empty,
+            topMiddle: .empty,
+            topRight: .empty,
 
             // middle row
-            middleLeftFilledByCurrentPlayer: false,
-            middleMiddleFilledByCurrentPlayer: false,
-            middleRightFilledByCurrentPlayer: false,
+            middleLeft: .empty,
+            middleMiddle: .empty,
+            middleRight: .empty,
 
             // bottom row
-            bottomLeftFilledByCurrentPlayer: true,
-            bottomMiddleFilledByCurrentPlayer: true,
-            bottomRightFilledByCurrentPlayer: true
+            bottomLeft: .x,
+            bottomMiddle: .x,
+            bottomRight: .x
         )
 
         #expect(result == .win)
@@ -263,21 +275,22 @@ struct GameRulesEngineTests {
     func gameIsWin_whenFirstColumnIsFilled() {
         let result = engine.evaluateGameState(
             isBoardFull: false,
+            currentPlayer: .x,
 
             // top row
-            topLeftFilledByCurrentPlayer: true,
-            topMiddleFilledByCurrentPlayer: false,
-            topRightFilledByCurrentPlayer: false,
+            topLeft: .x,
+            topMiddle: .empty,
+            topRight: .empty,
 
             // middle row
-            middleLeftFilledByCurrentPlayer: true,
-            middleMiddleFilledByCurrentPlayer: false,
-            middleRightFilledByCurrentPlayer: false,
+            middleLeft: .x,
+            middleMiddle: .empty,
+            middleRight: .empty,
 
             // bottom row
-            bottomLeftFilledByCurrentPlayer: true,
-            bottomMiddleFilledByCurrentPlayer: false,
-            bottomRightFilledByCurrentPlayer: false
+            bottomLeft: .x,
+            bottomMiddle: .empty,
+            bottomRight: .empty
         )
 
         #expect(result == .win)
@@ -287,21 +300,22 @@ struct GameRulesEngineTests {
     func gameIsWin_whenMidColumnIsFilled() {
         let result = engine.evaluateGameState(
             isBoardFull: false,
+            currentPlayer: .x,
 
             // top row
-            topLeftFilledByCurrentPlayer: false,
-            topMiddleFilledByCurrentPlayer: true,
-            topRightFilledByCurrentPlayer: false,
+            topLeft: .empty,
+            topMiddle: .x,
+            topRight: .empty,
 
             // middle row
-            middleLeftFilledByCurrentPlayer: false,
-            middleMiddleFilledByCurrentPlayer: true,
-            middleRightFilledByCurrentPlayer: false,
+            middleLeft: .empty,
+            middleMiddle: .x,
+            middleRight: .empty,
 
             // bottom row
-            bottomLeftFilledByCurrentPlayer: false,
-            bottomMiddleFilledByCurrentPlayer: true,
-            bottomRightFilledByCurrentPlayer: false
+            bottomLeft: .empty,
+            bottomMiddle: .x,
+            bottomRight: .empty
         )
 
         #expect(result == .win)
@@ -312,21 +326,22 @@ struct GameRulesEngineTests {
     func gameIsWin_whenLastColumnIsFilled() {
         let result = engine.evaluateGameState(
             isBoardFull: false,
+            currentPlayer: .x,
 
             // top row
-            topLeftFilledByCurrentPlayer: false,
-            topMiddleFilledByCurrentPlayer: false,
-            topRightFilledByCurrentPlayer: true,
+            topLeft: .empty,
+            topMiddle: .empty,
+            topRight: .x,
 
             // middle row
-            middleLeftFilledByCurrentPlayer: false,
-            middleMiddleFilledByCurrentPlayer: false,
-            middleRightFilledByCurrentPlayer: true,
+            middleLeft: .empty,
+            middleMiddle: .empty,
+            middleRight: .x,
 
             // bottom row
-            bottomLeftFilledByCurrentPlayer: false,
-            bottomMiddleFilledByCurrentPlayer: false,
-            bottomRightFilledByCurrentPlayer: true
+            bottomLeft: .empty,
+            bottomMiddle: .empty,
+            bottomRight: .x
         )
 
         #expect(result == .win)
@@ -335,45 +350,46 @@ struct GameRulesEngineTests {
     @Test("Test game is win when last col is filled")
     func gameIsWin_whenAnyColumnIsFilled() {
         let testCases: [(String,
-                         Bool, Bool, Bool,
-                         Bool, Bool, Bool,
-                         Bool, Bool, Bool)] = [
+                         CellState, CellState, CellState,
+                         CellState, CellState, CellState,
+                         CellState, CellState, CellState)] = [
 
             // second column
             (
                 "second column",
-                false, true, false,   // top
-                false, true, false,   // middle
-                false, true, false    // bottom
+                .empty, .x, .empty,   // top
+                .empty, .x, .empty,   // middle
+                .empty, .x, .empty    // bottom
             ),
 
             // third column
             (
                 "third column",
-                false, false, true,   // top
-                false, false, true,   // middle
-                false, false, true    // bottom
+                .empty, .empty, .x,   // top
+                .empty, .empty, .x,   // middle
+                .empty, .empty, .x    // bottom
             )
         ]
 
         for (_, tl, tm, tr, ml, mm, mr, bl, bm, br) in testCases {
             let result = engine.evaluateGameState(
                 isBoardFull: false,
+                currentPlayer: .x,
 
                 // top row
-                topLeftFilledByCurrentPlayer: tl,
-                topMiddleFilledByCurrentPlayer: tm,
-                topRightFilledByCurrentPlayer: tr,
+                topLeft: tl,
+                topMiddle: tm,
+                topRight: tr,
 
                 // middle row
-                middleLeftFilledByCurrentPlayer: ml,
-                middleMiddleFilledByCurrentPlayer: mm,
-                middleRightFilledByCurrentPlayer: mr,
+                middleLeft: ml,
+                middleMiddle: mm,
+                middleRight: mr,
 
                 // bottom row
-                bottomLeftFilledByCurrentPlayer: bl,
-                bottomMiddleFilledByCurrentPlayer: bm,
-                bottomRightFilledByCurrentPlayer: br
+                bottomLeft: bl,
+                bottomMiddle: bm,
+                bottomRight: br
             )
 
             #expect(result == .win)
@@ -384,21 +400,22 @@ struct GameRulesEngineTests {
     func gameIsWin_whenPrimaryDiagonalIsFilled() {
         let result = engine.evaluateGameState(
             isBoardFull: false,
+            currentPlayer: .x,
 
             // top row
-            topLeftFilledByCurrentPlayer: true,
-            topMiddleFilledByCurrentPlayer: false,
-            topRightFilledByCurrentPlayer: false,
+            topLeft: .x,
+            topMiddle: .empty,
+            topRight: .empty,
 
             // middle row
-            middleLeftFilledByCurrentPlayer: false,
-            middleMiddleFilledByCurrentPlayer: true,
-            middleRightFilledByCurrentPlayer: false,
+            middleLeft: .empty,
+            middleMiddle: .x,
+            middleRight: .empty,
 
             // bottom row
-            bottomLeftFilledByCurrentPlayer: false,
-            bottomMiddleFilledByCurrentPlayer: false,
-            bottomRightFilledByCurrentPlayer: true
+            bottomLeft: .empty,
+            bottomMiddle: .empty,
+            bottomRight: .x
         )
 
         #expect(result == .win)
@@ -408,21 +425,22 @@ struct GameRulesEngineTests {
     func gameIsWin_whenSecondaryDiagonalIsFilled() {
         let result = engine.evaluateGameState(
             isBoardFull: false,
+            currentPlayer: .x,
 
             // top row
-            topLeftFilledByCurrentPlayer: false,
-            topMiddleFilledByCurrentPlayer: false,
-            topRightFilledByCurrentPlayer: true,
+            topLeft: .empty,
+            topMiddle: .empty,
+            topRight: .x,
 
             // middle row
-            middleLeftFilledByCurrentPlayer: false,
-            middleMiddleFilledByCurrentPlayer: true,
-            middleRightFilledByCurrentPlayer: false,
+            middleLeft: .empty,
+            middleMiddle: .x,
+            middleRight: .empty,
 
             // bottom row
-            bottomLeftFilledByCurrentPlayer: true,
-            bottomMiddleFilledByCurrentPlayer: false,
-            bottomRightFilledByCurrentPlayer: false
+            bottomLeft: .x,
+            bottomMiddle: .empty,
+            bottomRight: .empty
         )
 
         #expect(result == .win)

@@ -5,14 +5,26 @@
 //  Created by Pragati RAWAT on 05/02/2026.
 //
 
+enum CellState: Equatable {
+    case empty
+    case x
+    case o
+}
+
 struct Board: Equatable {
 
-    private let cells: [Bool]
+    private let cells: [CellState]
 
     init(
-        topLeft: Bool, topMiddle: Bool, topRight: Bool,
-        middleLeft: Bool, middleMiddle: Bool, middleRight: Bool,
-        bottomLeft: Bool, bottomMiddle: Bool, bottomRight: Bool
+        topLeft: CellState,
+        topMiddle: CellState,
+        topRight: CellState,
+        middleLeft: CellState,
+        middleMiddle: CellState,
+        middleRight: CellState,
+        bottomLeft: CellState,
+        bottomMiddle: CellState,
+        bottomRight: CellState
     ) {
         self.cells = [
             topLeft, topMiddle, topRight,
@@ -21,9 +33,9 @@ struct Board: Equatable {
         ]
     }
 
-    func hasWinningPattern() -> Bool {
+    func hasWinningPattern(for player: CellState) -> Bool {
         winPatterns.contains { pattern in
-            pattern.allSatisfy { cells[$0] }
+            pattern.allSatisfy { cells[$0] == player }
         }
     }
 
@@ -34,3 +46,4 @@ struct Board: Equatable {
         [0,4,8],[2,4,6]
     ]
 }
+

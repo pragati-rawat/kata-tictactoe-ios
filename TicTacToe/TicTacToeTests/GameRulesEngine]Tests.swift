@@ -22,5 +22,12 @@ struct GameRulesEngineTests {
         // Then
         #expect(result == false, "Failed at evaluating game progress for boardValue \(boardIsFull)")
     }
+    
+    @Test("Test game is ongoing when board is not full")
+    func gameIsOngoing_whenBoardIsNotFull() {
+        let boardIsFull = false
+        let isGameOver = engine.evaluateGameState(isBoardFull: boardIsFull)
+        #expect(isGameOver == false,  "Failed at evaluating boardisNOtFull for boardValue \(boardIsFull)")
+    }
 
 }

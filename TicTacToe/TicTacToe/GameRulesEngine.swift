@@ -41,15 +41,20 @@ final class GameRulesEngine {
         // bottom row win
        let bottomRowWin = isWinningRow(bottomLeftFilledByCurrentPlayer, bottomMiddleFilledByCurrentPlayer, bottomRightFilledByCurrentPlayer)
         
+        if isTopRowWin || middleRowWin || bottomRowWin {
+            return .win
+        }
+        
         // first column
         if isWinningRow(topLeftFilledByCurrentPlayer, middleLeftFilledByCurrentPlayer, bottomLeftFilledByCurrentPlayer) {
             return .win
         }
         
-        if isTopRowWin || middleRowWin || bottomRowWin {
+        // mid column
+        if isWinningRow(topMiddleFilledByCurrentPlayer, middleMiddleFilledByCurrentPlayer, bottomMiddleFilledByCurrentPlayer) {
             return .win
         }
-
+        
         if isBoardFull {
             return .draw
         }

@@ -283,6 +283,29 @@ struct GameRulesEngineTests {
         #expect(result == .win)
     }
 
+    @Test("Test game is win when mid col is filled")
+    func gameIsWin_whenMidColumnIsFilled() {
+        let result = engine.evaluateGameState(
+            isBoardFull: false,
+
+            // top row
+            topLeftFilledByCurrentPlayer: false,
+            topMiddleFilledByCurrentPlayer: true,
+            topRightFilledByCurrentPlayer: false,
+
+            // middle row
+            middleLeftFilledByCurrentPlayer: false,
+            middleMiddleFilledByCurrentPlayer: true,
+            middleRightFilledByCurrentPlayer: false,
+
+            // bottom row
+            bottomLeftFilledByCurrentPlayer: false,
+            bottomMiddleFilledByCurrentPlayer: true,
+            bottomRightFilledByCurrentPlayer: false
+        )
+
+        #expect(result == .win)
+    }
 
 }
 

@@ -44,4 +44,15 @@ struct GameRulesEngineTests {
         let isGameOver = engine.evaluateGameState(isBoardFull: boardIsFull)
         #expect(isGameOver == .ongoing, "Failed at evaluating boardisNOtFull for emptycells \(boardIsFull)")
     }
+    
+    @Test("Test game is over when top row if filled")
+    func gameIsOver_whenTopRowIsFilled() {
+        let result = engine.evaluateGameState(
+            isBoardFull: false,
+            topLeftFilledByCurrentPlayer: true,
+            topMiddleFilledByCurrentPlayer: true,
+            topRightFilledByCurrentPlayer: true
+        )
+        #expect(result == .over)
+    }
 }

@@ -15,4 +15,16 @@ final class GameRulesEngine {
     func evaluateGameState(isBoardFull: Bool) -> GameStatus {
         isBoardFull ? .over : .ongoing
     }
+
+    func evaluateGameState(
+        isBoardFull: Bool,
+        topLeftFilledByCurrentPlayer: Bool,
+        topMiddleFilledByCurrentPlayer: Bool,
+        topRightFilledByCurrentPlayer: Bool
+    ) -> GameStatus {
+        if topLeftFilledByCurrentPlayer && topMiddleFilledByCurrentPlayer && topRightFilledByCurrentPlayer {
+            return .over
+        }
+        return isBoardFull ? .over : .ongoing
+    }
 }

@@ -55,6 +55,11 @@ final class GameRulesEngine {
             return .win
         }
         
+        // last column
+        if isWinningRow(topRightFilledByCurrentPlayer, middleRightFilledByCurrentPlayer, bottomRightFilledByCurrentPlayer) {
+            return .win
+        }
+        
         if isBoardFull {
             return .draw
         }

@@ -8,10 +8,19 @@
 import Testing
 @testable import TicTacToe
 
+@Suite("GameRulesEngine Tests")
 struct TicTacToeTests {
 
-    @Test func example() async throws {
-        // Write your test here and use APIs like `#expect(...)` to check expected conditions.
+    let engine = GameRulesEngine()
+    
+    @Test("Test game is ongoing by default")
+    func gameIsOngoing_byDefault() {
+        // Given
+        let boardIsFull = true
+        // When
+        let result = engine.evaluateGameState(isBoardFull: boardIsFull)
+        // Then
+        #expect(result == false, "Failed at evaluating game progress for boardValue \(boardIsFull)")
     }
 
 }

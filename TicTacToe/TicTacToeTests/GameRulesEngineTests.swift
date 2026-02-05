@@ -379,6 +379,31 @@ struct GameRulesEngineTests {
             #expect(result == .win)
         }
     }
+    
+    @Test("Test game is win when primary diagonal is filled")
+    func gameIsWin_whenPrimaryDiagonalIsFilled() {
+        let result = engine.evaluateGameState(
+            isBoardFull: false,
+
+            // top row
+            topLeftFilledByCurrentPlayer: true,
+            topMiddleFilledByCurrentPlayer: false,
+            topRightFilledByCurrentPlayer: false,
+
+            // middle row
+            middleLeftFilledByCurrentPlayer: false,
+            middleMiddleFilledByCurrentPlayer: true,
+            middleRightFilledByCurrentPlayer: false,
+
+            // bottom row
+            bottomLeftFilledByCurrentPlayer: false,
+            bottomMiddleFilledByCurrentPlayer: false,
+            bottomRightFilledByCurrentPlayer: true
+        )
+
+        #expect(result == .win)
+    }
+
 
 }
 

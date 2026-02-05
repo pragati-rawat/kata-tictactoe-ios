@@ -60,6 +60,11 @@ final class GameRulesEngine {
             return .win
         }
         
+        // primary diagonals
+        if isWinningRow(topLeftFilledByCurrentPlayer, middleMiddleFilledByCurrentPlayer, bottomRightFilledByCurrentPlayer) {
+            return .win
+        }
+        
         if isBoardFull {
             return .draw
         }

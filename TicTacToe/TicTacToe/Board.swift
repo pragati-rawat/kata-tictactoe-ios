@@ -14,6 +14,7 @@ enum CellState: Equatable {
 enum BoardValidationError: Error, Equatable {
    case bothPlayersWon
    case invalidMoveCount
+   case oPlayedBeforeX
 }
 
 struct Board: Equatable {
@@ -65,6 +66,10 @@ struct Board: Equatable {
         
         if abs(xCount - oCount) > 1 {
             throw BoardValidationError.invalidMoveCount
+        }
+        
+        if oCount > xCount {
+            throw BoardValidationError.oPlayedBeforeX
         }
     }
 }

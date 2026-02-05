@@ -36,5 +36,18 @@ struct BoardValidationTests {
             try board.validate()
         }
     }
+    
+    @Test("Test board validation when O moves more than X")
+    func boardThrowsError_whenOMovesMoreThanX() {
+        let board = Board(
+            topLeft: .o, topMiddle: .o, topRight: .empty,
+            middleLeft: .x, middleMiddle: .empty, middleRight: .empty,
+            bottomLeft: .empty, bottomMiddle: .empty, bottomRight: .empty
+        )
+
+        #expect(throws: BoardValidationError.oPlayedBeforeX) {
+            try board.validate()
+        }
+    }
 
 }

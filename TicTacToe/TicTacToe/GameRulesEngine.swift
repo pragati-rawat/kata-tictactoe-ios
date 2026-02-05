@@ -8,6 +8,7 @@
 enum GameResult: Equatable {
     case ongoing
     case draw
+    case win
 }
 
 final class GameRulesEngine {
@@ -25,7 +26,7 @@ final class GameRulesEngine {
                                  topMiddle: topMiddleFilledByCurrentPlayer,
                                  topRight: topRightFilledByCurrentPlayer)
             
-        if result { return .draw }
+        if result { return .win }
         return isBoardFull ? .draw : .ongoing
     }
     

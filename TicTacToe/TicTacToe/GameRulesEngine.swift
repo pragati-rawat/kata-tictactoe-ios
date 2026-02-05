@@ -65,6 +65,11 @@ final class GameRulesEngine {
             return .win
         }
         
+        // secondary diaginal
+        if isWinningRow(topRightFilledByCurrentPlayer, middleMiddleFilledByCurrentPlayer, bottomLeftFilledByCurrentPlayer) {
+            return .win
+        }
+        
         if isBoardFull {
             return .draw
         }

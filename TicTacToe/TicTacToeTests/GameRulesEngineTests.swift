@@ -331,5 +331,54 @@ struct GameRulesEngineTests {
 
         #expect(result == .win)
     }
+    
+    @Test("Test game is win when last col is filled")
+    func gameIsWin_whenAnyColumnIsFilled() {
+        let testCases: [(String,
+                         Bool, Bool, Bool,
+                         Bool, Bool, Bool,
+                         Bool, Bool, Bool)] = [
+
+            // second column
+            (
+                "second column",
+                false, true, false,   // top
+                false, true, false,   // middle
+                false, true, false    // bottom
+            ),
+
+            // third column
+            (
+                "third column",
+                false, false, true,   // top
+                false, false, true,   // middle
+                false, false, true    // bottom
+            )
+        ]
+
+        for (_, tl, tm, tr, ml, mm, mr, bl, bm, br) in testCases {
+            let result = engine.evaluateGameState(
+                isBoardFull: false,
+
+                // top row
+                topLeftFilledByCurrentPlayer: tl,
+                topMiddleFilledByCurrentPlayer: tm,
+                topRightFilledByCurrentPlayer: tr,
+
+                // middle row
+                middleLeftFilledByCurrentPlayer: ml,
+                middleMiddleFilledByCurrentPlayer: mm,
+                middleRightFilledByCurrentPlayer: mr,
+
+                // bottom row
+                bottomLeftFilledByCurrentPlayer: bl,
+                bottomMiddleFilledByCurrentPlayer: bm,
+                bottomRightFilledByCurrentPlayer: br
+            )
+
+            #expect(result == .win)
+        }
+    }
+
 }
 

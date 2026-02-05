@@ -30,4 +30,11 @@ struct GameRulesEngineTests {
         #expect(isGameOver == false,  "Failed at evaluating boardisNOtFull for boardValue \(boardIsFull)")
     }
 
+    @Test("Test game is over when board is full")
+    func gameIsOver_forAnyFullBoard() {
+        let inputs = [true, true, true]
+        for isFull in inputs {
+            #expect(engine.evaluateGameState(isBoardFull: isFull) == true)
+        }
+    }
 }

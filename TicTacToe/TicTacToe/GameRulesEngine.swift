@@ -8,9 +8,6 @@
 final class GameRulesEngine {
     
     func evaluateGameState(isBoardFull: Bool) -> Bool {
-        if isBoardFull {
-            return true
-        }
-        return false
+        isBoardFull
     }
 }

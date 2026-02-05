@@ -77,7 +77,7 @@ struct GameRulesEngineTests {
         }
     }
     
-    @Test("Test game is over when top row if filled")
+    @Test("Test game is draw when top row is filled andnowin")
     func gameIsDraw_whenBoardIsFull_andNoWin() {
         let result = engine.evaluateGameState(
             isBoardFull: true,
@@ -87,5 +87,19 @@ struct GameRulesEngineTests {
         )
 
         #expect(result == .draw)
+    }
+    
+    @Test("Test game is ongoing when top row is not filled andnowin")
+    func gameIsOngoing_whenBoardIsNotFull_andNoWin() {
+        let engine = GameRulesEngine()
+
+        let result = engine.evaluateGameState(
+            isBoardFull: false,
+            topLeftFilledByCurrentPlayer: false,
+            topMiddleFilledByCurrentPlayer: false,
+            topRightFilledByCurrentPlayer: false
+        )
+
+        #expect(result == .ongoing)
     }
 }

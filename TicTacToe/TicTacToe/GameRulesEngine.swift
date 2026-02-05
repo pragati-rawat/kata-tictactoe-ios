@@ -13,24 +13,50 @@ enum GameResult: Equatable {
 
 final class GameRulesEngine {
     
-    func evaluateGameState(isBoardFull: Bool) -> GameResult {
-        isBoardFull ? .draw : .ongoing
-    }
-
     func evaluateGameState(
         isBoardFull: Bool,
+        
+        // top row
         topLeftFilledByCurrentPlayer: Bool,
         topMiddleFilledByCurrentPlayer: Bool,
-        topRightFilledByCurrentPlayer: Bool) -> GameResult {
-        let result = isTopRowWin(topLeft: topLeftFilledByCurrentPlayer,
-                                 topMiddle: topMiddleFilledByCurrentPlayer,
-                                 topRight: topRightFilledByCurrentPlayer)
-            
-        if result { return .win }
-        return isBoardFull ? .draw : .ongoing
+        topRightFilledByCurrentPlayer: Bool,
+        
+        // second row
+        middleLeftFilledByCurrentPlayer: Bool,
+        middleMiddleFilledByCurrentPlayer: Bool,
+        middleRightFilledByCurrentPlayer: Bool
+    ) -> GameResult {
+        
+        // top row win
+        let isTopRowWin = isTopRowWin(topLeft: topLeftFilledByCurrentPlayer,
+                                      topMiddle: topMiddleFilledByCurrentPlayer,
+                                      topRight: topRightFilledByCurrentPlayer)
+        if isTopRowWin {
+            return .win
+        }
+        
+        // second row win
+       let middleRowWin = isMiddleRowWin(midRowLeft: middleLeftFilledByCurrentPlayer,
+                                         midRowMiddle: middleMiddleFilledByCurrentPlayer,
+                                         midRowRight: middleRightFilledByCurrentPlayer)
+        
+        
+        if middleRowWin {
+            return .win
+        }
+        
+        if isBoardFull {
+            return .draw
+        }
+        
+        return .ongoing
     }
-    
+
     private func isTopRowWin(topLeft: Bool, topMiddle: Bool, topRight: Bool) -> Bool {
         topLeft && topMiddle && topRight
+    }
+    
+    private func isMiddleRowWin(midRowLeft: Bool, midRowMiddle: Bool, midRowRight: Bool) -> Bool {
+        midRowLeft && midRowMiddle && midRowRight
     }
 }

@@ -21,9 +21,15 @@ final class GameRulesEngine {
         topLeftFilledByCurrentPlayer: Bool,
         topMiddleFilledByCurrentPlayer: Bool,
         topRightFilledByCurrentPlayer: Bool) -> GameStatus {
-        if topLeftFilledByCurrentPlayer && topMiddleFilledByCurrentPlayer && topRightFilledByCurrentPlayer {
-            return .over
-        }
+        let result = isTopRowWin(topLeft: topLeftFilledByCurrentPlayer,
+                                 topMiddle: topMiddleFilledByCurrentPlayer,
+                                 topRight: topRightFilledByCurrentPlayer)
+            
+        if result { return .over }
         return isBoardFull ? .over : .ongoing
+    }
+    
+    private func isTopRowWin(topLeft: Bool, topMiddle: Bool, topRight: Bool) -> Bool {
+        topLeft && topMiddle && topRight
     }
 }

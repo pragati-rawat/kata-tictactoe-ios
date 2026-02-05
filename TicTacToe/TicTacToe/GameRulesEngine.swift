@@ -12,7 +12,32 @@ enum GameResult: Equatable {
 }
 
 final class GameRulesEngine {
+    // MARK: - Private helpers
+    private func cells(
+        _ tl: Bool, _ tm: Bool, _ tr: Bool,
+        _ ml: Bool, _ mm: Bool, _ mr: Bool,
+        _ bl: Bool, _ bm: Bool, _ br: Bool
+    ) -> [Bool] {
+        [
+            tl, tm, tr,
+            ml, mm, mr,
+            bl, bm, br
+        ]
+    }
     
+    private let winPatterns: [[Int]] = [
+        [0,1,2],[3,4,5],[6,7,8],
+        [0,3,6],[1,4,7],[2,5,8],
+        [0,4,8],[2,4,6]
+    ]
+    
+    private func hasWinningPattern(_ cells: [Bool]) -> Bool {
+        winPatterns.contains { pattern in
+            pattern.allSatisfy { cells[$0] }
+        }
+    }
+
+    //MARK: GameState
     func evaluateGameState(
         isBoardFull: Bool,
         
@@ -32,41 +57,19 @@ final class GameRulesEngine {
         bottomRightFilledByCurrentPlayer: Bool
     ) -> GameResult {
         
-        // top row win
-        let isTopRowWin = isWinningRow(topLeftFilledByCurrentPlayer, topMiddleFilledByCurrentPlayer, topRightFilledByCurrentPlayer)
-       
-      // middle row win
-       let middleRowWin = isWinningRow(middleLeftFilledByCurrentPlayer, middleMiddleFilledByCurrentPlayer, middleRightFilledByCurrentPlayer)
+        let cells = cells(
+            topLeftFilledByCurrentPlayer,
+            topMiddleFilledByCurrentPlayer,
+            topRightFilledByCurrentPlayer,
+            middleLeftFilledByCurrentPlayer,
+            middleMiddleFilledByCurrentPlayer,
+            middleRightFilledByCurrentPlayer,
+            bottomLeftFilledByCurrentPlayer,
+            bottomMiddleFilledByCurrentPlayer,
+            bottomRightFilledByCurrentPlayer
+        )
         
-        // bottom row win
-       let bottomRowWin = isWinningRow(bottomLeftFilledByCurrentPlayer, bottomMiddleFilledByCurrentPlayer, bottomRightFilledByCurrentPlayer)
-        
-        if isTopRowWin || middleRowWin || bottomRowWin {
-            return .win
-        }
-        
-        // first column
-        if isWinningRow(topLeftFilledByCurrentPlayer, middleLeftFilledByCurrentPlayer, bottomLeftFilledByCurrentPlayer) {
-            return .win
-        }
-        
-        // mid column
-        if isWinningRow(topMiddleFilledByCurrentPlayer, middleMiddleFilledByCurrentPlayer, bottomMiddleFilledByCurrentPlayer) {
-            return .win
-        }
-        
-        // last column
-        if isWinningRow(topRightFilledByCurrentPlayer, middleRightFilledByCurrentPlayer, bottomRightFilledByCurrentPlayer) {
-            return .win
-        }
-        
-        // primary diagonals
-        if isWinningRow(topLeftFilledByCurrentPlayer, middleMiddleFilledByCurrentPlayer, bottomRightFilledByCurrentPlayer) {
-            return .win
-        }
-        
-        // secondary diaginal
-        if isWinningRow(topRightFilledByCurrentPlayer, middleMiddleFilledByCurrentPlayer, bottomLeftFilledByCurrentPlayer) {
+        if hasWinningPattern(cells) {
             return .win
         }
         
@@ -76,10 +79,5 @@ final class GameRulesEngine {
         
         return .ongoing
     }
-
-    private func isWinningRow(_ leftValue: Bool,_ midValue: Bool, _ rightValue: Bool) -> Bool {
-        leftValue && midValue && rightValue
-    }
-    
 }
 

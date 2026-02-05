@@ -21,27 +21,42 @@ final class GameRulesEngine {
         topMiddleFilledByCurrentPlayer: Bool,
         topRightFilledByCurrentPlayer: Bool,
         
-        // second row
+        // middle row
         middleLeftFilledByCurrentPlayer: Bool,
         middleMiddleFilledByCurrentPlayer: Bool,
-        middleRightFilledByCurrentPlayer: Bool
+        middleRightFilledByCurrentPlayer: Bool,
+        
+        // bottom row
+        bottomLeftFilledByCurrentPlayer: Bool,
+        bottomMiddleFilledByCurrentPlayer: Bool,
+        bottomRightFilledByCurrentPlayer: Bool
     ) -> GameResult {
         
         // top row win
         let isTopRowWin = isTopRowWin(topLeft: topLeftFilledByCurrentPlayer,
                                       topMiddle: topMiddleFilledByCurrentPlayer,
                                       topRight: topRightFilledByCurrentPlayer)
-        if isTopRowWin {
-            return .win
-        }
-        
-        // second row win
+        // middle row win
        let middleRowWin = isMiddleRowWin(midRowLeft: middleLeftFilledByCurrentPlayer,
                                          midRowMiddle: middleMiddleFilledByCurrentPlayer,
                                          midRowRight: middleRightFilledByCurrentPlayer)
         
         
+        // bottom row win
+       let bottomRowWin = isBottomRowWin(bottomRowLeft: bottomLeftFilledByCurrentPlayer,
+                                         bottomRowMiddle: bottomMiddleFilledByCurrentPlayer,
+                                         bottomRowRight: bottomRightFilledByCurrentPlayer)
+        
+        
+        if isTopRowWin {
+            return .win
+        }
+        
         if middleRowWin {
+            return .win
+        }
+        
+        if bottomRowWin {
             return .win
         }
         
@@ -59,4 +74,9 @@ final class GameRulesEngine {
     private func isMiddleRowWin(midRowLeft: Bool, midRowMiddle: Bool, midRowRight: Bool) -> Bool {
         midRowLeft && midRowMiddle && midRowRight
     }
+    
+    private func isBottomRowWin(bottomRowLeft: Bool, bottomRowMiddle: Bool, bottomRowRight: Bool) -> Bool {
+        bottomRowLeft && bottomRowMiddle && bottomRowRight
+    }
 }
+

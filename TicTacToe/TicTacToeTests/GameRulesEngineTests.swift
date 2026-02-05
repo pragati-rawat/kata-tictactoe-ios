@@ -25,7 +25,10 @@ struct GameRulesEngineTests {
             topRightFilledByCurrentPlayer: false,
             middleLeftFilledByCurrentPlayer: false,
             middleMiddleFilledByCurrentPlayer: false,
-            middleRightFilledByCurrentPlayer: false
+            middleRightFilledByCurrentPlayer: false,
+            bottomLeftFilledByCurrentPlayer: false,
+            bottomMiddleFilledByCurrentPlayer: false,
+            bottomRightFilledByCurrentPlayer: false
         )
         // Then
         #expect(isGameOver == .draw, "Failed at evaluating game progress for boardValue \(boardIsFull)")
@@ -41,7 +44,10 @@ struct GameRulesEngineTests {
             topRightFilledByCurrentPlayer: false,
             middleLeftFilledByCurrentPlayer: false,
             middleMiddleFilledByCurrentPlayer: false,
-            middleRightFilledByCurrentPlayer: false
+            middleRightFilledByCurrentPlayer: false,
+            bottomLeftFilledByCurrentPlayer: false,
+            bottomMiddleFilledByCurrentPlayer: false,
+            bottomRightFilledByCurrentPlayer: false
         )
         #expect(isGameOver == .ongoing, "Failed at evaluating boardisNOtFull for boardValue \(boardIsFull)")
     }
@@ -57,7 +63,10 @@ struct GameRulesEngineTests {
                 topRightFilledByCurrentPlayer: false,
                 middleLeftFilledByCurrentPlayer: false,
                 middleMiddleFilledByCurrentPlayer: false,
-                middleRightFilledByCurrentPlayer: false
+                middleRightFilledByCurrentPlayer: false,
+                bottomLeftFilledByCurrentPlayer: false,
+                bottomMiddleFilledByCurrentPlayer: false,
+                bottomRightFilledByCurrentPlayer: false
             ) == .draw)
         }
     }
@@ -72,7 +81,10 @@ struct GameRulesEngineTests {
             topRightFilledByCurrentPlayer: false,
             middleLeftFilledByCurrentPlayer: false,
             middleMiddleFilledByCurrentPlayer: false,
-            middleRightFilledByCurrentPlayer: false
+            middleRightFilledByCurrentPlayer: false,
+            bottomLeftFilledByCurrentPlayer: false,
+            bottomMiddleFilledByCurrentPlayer: false,
+            bottomRightFilledByCurrentPlayer: false
         )
         #expect(isGameOver == .ongoing, "Failed at evaluating boardisNOtFull for emptycells \(boardIsFull)")
     }
@@ -86,7 +98,10 @@ struct GameRulesEngineTests {
             topRightFilledByCurrentPlayer: true,
             middleLeftFilledByCurrentPlayer: false,
             middleMiddleFilledByCurrentPlayer: false,
-            middleRightFilledByCurrentPlayer: false
+            middleRightFilledByCurrentPlayer: false,
+            bottomLeftFilledByCurrentPlayer: false,
+            bottomMiddleFilledByCurrentPlayer: false,
+            bottomRightFilledByCurrentPlayer: false
         )
         #expect(result == .draw)
     }
@@ -109,7 +124,10 @@ struct GameRulesEngineTests {
                 topRightFilledByCurrentPlayer: right,
                 middleLeftFilledByCurrentPlayer: false,
                 middleMiddleFilledByCurrentPlayer: false,
-                middleRightFilledByCurrentPlayer: false
+                middleRightFilledByCurrentPlayer: false,
+                bottomLeftFilledByCurrentPlayer: false,
+                bottomMiddleFilledByCurrentPlayer: false,
+                bottomRightFilledByCurrentPlayer: false
             )
             #expect(result == expected)
         }
@@ -124,7 +142,10 @@ struct GameRulesEngineTests {
             topRightFilledByCurrentPlayer: false,
             middleLeftFilledByCurrentPlayer: false,
             middleMiddleFilledByCurrentPlayer: false,
-            middleRightFilledByCurrentPlayer: false
+            middleRightFilledByCurrentPlayer: false,
+            bottomLeftFilledByCurrentPlayer: false,
+            bottomMiddleFilledByCurrentPlayer: false,
+            bottomRightFilledByCurrentPlayer: false
         )
         
         #expect(result == .draw)
@@ -139,7 +160,10 @@ struct GameRulesEngineTests {
             topRightFilledByCurrentPlayer: false,
             middleLeftFilledByCurrentPlayer: false,
             middleMiddleFilledByCurrentPlayer: false,
-            middleRightFilledByCurrentPlayer: false
+            middleRightFilledByCurrentPlayer: false,
+            bottomLeftFilledByCurrentPlayer: false,
+            bottomMiddleFilledByCurrentPlayer: false,
+            bottomRightFilledByCurrentPlayer: false
         )
         
         #expect(result == .ongoing)
@@ -154,7 +178,10 @@ struct GameRulesEngineTests {
             topRightFilledByCurrentPlayer: true,
             middleLeftFilledByCurrentPlayer: false,
             middleMiddleFilledByCurrentPlayer: false,
-            middleRightFilledByCurrentPlayer: false
+            middleRightFilledByCurrentPlayer: false,
+            bottomLeftFilledByCurrentPlayer: false,
+            bottomMiddleFilledByCurrentPlayer: false,
+            bottomRightFilledByCurrentPlayer: false
         )
         
         #expect(result == .win)
@@ -173,7 +200,12 @@ struct GameRulesEngineTests {
             // second row
             middleLeftFilledByCurrentPlayer: true,
             middleMiddleFilledByCurrentPlayer: true,
-            middleRightFilledByCurrentPlayer: true
+            middleRightFilledByCurrentPlayer: true,
+            
+            // bottom row
+            bottomLeftFilledByCurrentPlayer: false,
+            bottomMiddleFilledByCurrentPlayer: false,
+            bottomRightFilledByCurrentPlayer: false
         )
         
         #expect(result == .win)
@@ -192,10 +224,42 @@ struct GameRulesEngineTests {
             // second row
             middleLeftFilledByCurrentPlayer: true,
             middleMiddleFilledByCurrentPlayer: false,
-            middleRightFilledByCurrentPlayer: true
+            middleRightFilledByCurrentPlayer: true,
+
+            // bottom row
+            bottomLeftFilledByCurrentPlayer: false,
+            bottomMiddleFilledByCurrentPlayer: false,
+            bottomRightFilledByCurrentPlayer: false
         )
 
         #expect(result == .ongoing)
     }
+    
+    @Test("Test game is win when bottom row is filled")
+    func gameIsWin_whenThirdRowIsFilled() {
+        let engine = GameRulesEngine()
+
+        let result = engine.evaluateGameState(
+            isBoardFull: false,
+
+            // top row
+            topLeftFilledByCurrentPlayer: false,
+            topMiddleFilledByCurrentPlayer: false,
+            topRightFilledByCurrentPlayer: false,
+
+            // middle row
+            middleLeftFilledByCurrentPlayer: false,
+            middleMiddleFilledByCurrentPlayer: false,
+            middleRightFilledByCurrentPlayer: false,
+
+            // bottom row
+            bottomLeftFilledByCurrentPlayer: true,
+            bottomMiddleFilledByCurrentPlayer: true,
+            bottomRightFilledByCurrentPlayer: true
+        )
+
+        #expect(result == .win)
+    }
+
 }
 

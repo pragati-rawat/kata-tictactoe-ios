@@ -11,10 +11,21 @@ enum CellState: Equatable {
     case o
 }
 
+enum BoardValidationError: Error, Equatable {
+   case bothPlayersWon
+}
+
 struct Board: Equatable {
 
     private let cells: [CellState]
 
+    // MARK: - Win Patterns
+    private let winPatterns: [[Int]] = [
+        [0,1,2],[3,4,5],[6,7,8],
+        [0,3,6],[1,4,7],[2,5,8],
+        [0,4,8],[2,4,6]
+    ]
+    
     init(
         topLeft: CellState,
         topMiddle: CellState,
@@ -39,11 +50,17 @@ struct Board: Equatable {
         }
     }
 
-    // MARK: - Win Patterns
-    private let winPatterns: [[Int]] = [
-        [0,1,2],[3,4,5],[6,7,8],
-        [0,3,6],[1,4,7],[2,5,8],
-        [0,4,8],[2,4,6]
-    ]
+    // MARK: - Validation
+    func validate() throws {
+        let xCount = cells.filter { $0 == .x }.count
+        let oCount = cells.filter { $0 == .o }.count
+    
+        let xWins = hasWinningPattern(for: .x)
+        let oWins = hasWinningPattern(for: .o)
+        
+        if xWins && oWins {
+            throw BoardValidationError.bothPlayersWon
+        }
+    }
 }
 

@@ -103,13 +103,13 @@ struct GameRulesEngineTests {
             bottomMiddleFilledByCurrentPlayer: false,
             bottomRightFilledByCurrentPlayer: false
         )
-        #expect(result == .draw)
+        #expect(result == .win)
     }
     
     @Test("Test game is over when top row if filled")
     func topRowWinGame_whenTopRowIsFillerWithArgs() {
         let cases: [(Bool, Bool, Bool, GameResult)] = [
-            (true, true, true, .draw),
+            (true, true, true, .win),
             (true, true, false, .ongoing),
             (true, false, true, .ongoing),
             (false, true, true, .ongoing),

@@ -57,19 +57,19 @@ final class GameRulesEngine {
         bottomRightFilledByCurrentPlayer: Bool
     ) -> GameResult {
         
-        let cells = cells(
-            topLeftFilledByCurrentPlayer,
-            topMiddleFilledByCurrentPlayer,
-            topRightFilledByCurrentPlayer,
-            middleLeftFilledByCurrentPlayer,
-            middleMiddleFilledByCurrentPlayer,
-            middleRightFilledByCurrentPlayer,
-            bottomLeftFilledByCurrentPlayer,
-            bottomMiddleFilledByCurrentPlayer,
-            bottomRightFilledByCurrentPlayer
+        let board = Board(
+            topLeft: topLeftFilledByCurrentPlayer,
+            topMiddle: topMiddleFilledByCurrentPlayer,
+            topRight: topRightFilledByCurrentPlayer,
+            middleLeft: middleLeftFilledByCurrentPlayer,
+            middleMiddle: middleMiddleFilledByCurrentPlayer,
+            middleRight: middleRightFilledByCurrentPlayer,
+            bottomLeft: bottomLeftFilledByCurrentPlayer,
+            bottomMiddle: bottomMiddleFilledByCurrentPlayer,
+            bottomRight: bottomRightFilledByCurrentPlayer
         )
         
-        if hasWinningPattern(cells) {
+        if board.hasWinningPattern() {
             return .win
         }
         

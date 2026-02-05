@@ -55,4 +55,25 @@ struct GameRulesEngineTests {
         )
         #expect(result == .over)
     }
+    
+    @Test("Test game is over when top row if filled")
+    func topRowWinGame_whenTopRowIsFillerWithArgs() {
+        let cases: [(Bool, Bool, Bool, GameStatus)] = [
+            (true, true, true, .over),
+            (true, true, false, .ongoing),
+            (true, false, true, .ongoing),
+            (false, true, true, .ongoing),
+            (false, false, false, .ongoing)
+        ]
+        
+        for (left, middle, right, expected) in cases {
+            let result = engine.evaluateGameState(
+                isBoardFull: false,
+                topLeftFilledByCurrentPlayer: left,
+                topMiddleFilledByCurrentPlayer: middle,
+                topRightFilledByCurrentPlayer: right
+            )
+            #expect(result == expected)
+        }
+    }
 }

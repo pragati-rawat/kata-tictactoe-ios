@@ -20,8 +20,7 @@ final class GameRulesEngine {
         isBoardFull: Bool,
         topLeftFilledByCurrentPlayer: Bool,
         topMiddleFilledByCurrentPlayer: Bool,
-        topRightFilledByCurrentPlayer: Bool
-    ) -> GameStatus {
+        topRightFilledByCurrentPlayer: Bool) -> GameStatus {
         if topLeftFilledByCurrentPlayer && topMiddleFilledByCurrentPlayer && topRightFilledByCurrentPlayer {
             return .over
         }

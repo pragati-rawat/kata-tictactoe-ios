@@ -237,8 +237,6 @@ struct GameRulesEngineTests {
     
     @Test("Test game is win when bottom row is filled")
     func gameIsWin_whenThirdRowIsFilled() {
-        let engine = GameRulesEngine()
-
         let result = engine.evaluateGameState(
             isBoardFull: false,
 
@@ -260,6 +258,31 @@ struct GameRulesEngineTests {
 
         #expect(result == .win)
     }
+    
+    @Test("Test game is win when first col is filled")
+    func gameIsWin_whenFirstColumnIsFilled() {
+        let result = engine.evaluateGameState(
+            isBoardFull: false,
+
+            // top row
+            topLeftFilledByCurrentPlayer: true,
+            topMiddleFilledByCurrentPlayer: false,
+            topRightFilledByCurrentPlayer: false,
+
+            // middle row
+            middleLeftFilledByCurrentPlayer: true,
+            middleMiddleFilledByCurrentPlayer: false,
+            middleRightFilledByCurrentPlayer: false,
+
+            // bottom row
+            bottomLeftFilledByCurrentPlayer: true,
+            bottomMiddleFilledByCurrentPlayer: false,
+            bottomRightFilledByCurrentPlayer: false
+        )
+
+        #expect(result == .win)
+    }
+
 
 }
 

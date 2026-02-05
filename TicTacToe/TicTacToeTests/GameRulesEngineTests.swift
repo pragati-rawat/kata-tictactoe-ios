@@ -77,4 +77,15 @@ struct GameRulesEngineTests {
         }
     }
     
+    @Test("Test game is over when top row if filled")
+    func gameIsDraw_whenBoardIsFull_andNoWin() {
+        let result = engine.evaluateGameState(
+            isBoardFull: true,
+            topLeftFilledByCurrentPlayer: false,
+            topMiddleFilledByCurrentPlayer: false,
+            topRightFilledByCurrentPlayer: false
+        )
+
+        #expect(result == .draw)
+    }
 }

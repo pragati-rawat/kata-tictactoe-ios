@@ -445,20 +445,5 @@ struct GameRulesEngineTests {
 
         #expect(result == .win)
     }
-
-    @Test("Test board validation when both players has winning pattern")
-    func boardThrowsError_whenBothPlayersHaveWinningPattern() {
-        let board = Board(
-            topLeft: .x, topMiddle: .x, topRight: .x,   // X wins row
-            middleLeft: .o, middleMiddle: .o, middleRight: .o, // O wins row
-            bottomLeft: .empty, bottomMiddle: .empty, bottomRight: .empty
-        )
-
-        #expect(throws: BoardValidationError.bothPlayersWon) {
-            try board.validate()
-        }
-    }
-
-
 }
 

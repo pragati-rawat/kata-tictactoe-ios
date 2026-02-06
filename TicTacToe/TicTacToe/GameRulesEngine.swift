@@ -26,7 +26,7 @@ final class GameRulesEngine {
         bottomLeft: CellState,
         bottomMiddle: CellState,
         bottomRight: CellState
-    ) -> GameResult {
+    ) throws -> GameResult {
 
         let board = Board(
             topLeft: topLeft,
@@ -40,14 +40,17 @@ final class GameRulesEngine {
             bottomRight: bottomRight
         )
 
+        // validation delegated to domain
+        try board.validate()
+        
         if board.hasWinningPattern(for: currentPlayer) {
             return .win
         }
-
+        
         if isBoardFull {
             return .draw
         }
-
+        
         return .ongoing
     }
 }

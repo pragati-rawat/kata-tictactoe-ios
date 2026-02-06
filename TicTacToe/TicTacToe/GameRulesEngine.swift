@@ -54,3 +54,21 @@ final class GameRulesEngine {
         return .ongoing
     }
 }
+
+
+extension GameRulesEngine: GameRulesEngineProtocol {
+
+    func evaluateGameState(
+        board: Board,
+        currentPlayer: CellState
+    ) throws -> GameResult {
+
+        try board.validate()
+
+        if board.hasWinningPattern(for: currentPlayer) {
+            return .win
+        }
+
+        return board.isFull ? .draw : .ongoing
+    }
+}

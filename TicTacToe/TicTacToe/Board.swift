@@ -28,6 +28,10 @@ struct Board: Equatable {
         [0,4,8],[2,4,6]
     ]
     
+    var isFull: Bool {
+        !cells.contains(.empty)
+    }
+    
     init(
         topLeft: CellState,
         topMiddle: CellState,

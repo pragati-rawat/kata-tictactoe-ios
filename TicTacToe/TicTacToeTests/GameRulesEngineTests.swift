@@ -9,6 +9,7 @@ import Testing
 @testable import TicTacToe
 
 @Suite("GameRulesEngine Tests")
+@MainActor
 struct GameRulesEngineTests {
     
     let engine = GameRulesEngine()

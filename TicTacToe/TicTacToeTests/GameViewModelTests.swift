@@ -25,6 +25,22 @@ import Testing
 
         #expect(viewModel.gameResult == .win)
     }
+    
+    @Test("Test ViewModel when engine throws error")
+    func viewModelExposesError_whenEngineThrowsValidationError() {
+        let mockEngine = MockGameRulesEngine()
+        mockEngine.errorToThrow = BoardValidationError.invalidMoveCount
+
+        let viewModel = GameViewModel(engine: mockEngine)
+
+        #expect(throws: BoardValidationError.invalidMoveCount) {
+            try viewModel.evaluate(
+                board: sampleInvalidBoard(),
+                currentPlayer: .x
+            )
+        }
+    }
+
 }
 
 //MARK: Test Helpers
@@ -34,6 +50,14 @@ extension GameViewModelTests {
         Board(
             topLeft: .x, topMiddle: .o, topRight: .x,
             middleLeft: .o, middleMiddle: .x, middleRight: .empty,
+            bottomLeft: .empty, bottomMiddle: .empty, bottomRight: .empty
+        )
+    }
+    
+    func sampleInvalidBoard() -> Board {
+        Board(
+            topLeft: .x, topMiddle: .x, topRight: .x,
+            middleLeft: .empty, middleMiddle: .empty, middleRight: .empty,
             bottomLeft: .empty, bottomMiddle: .empty, bottomRight: .empty
         )
     }

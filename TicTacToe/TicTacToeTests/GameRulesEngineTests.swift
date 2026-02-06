@@ -490,5 +490,19 @@ struct GameRulesEngineTests {
         }
     }
     
+    @Test("Test game is win when Board is valid")
+    func engineDoesNotThrow_whenBoardIsValid() {
+        #expect(throws: Never.self) {
+            try engine.evaluateGameState(
+                isBoardFull: false,
+                currentPlayer: .x,
+                
+                topLeft: .x, topMiddle: .o, topRight: .x,
+                middleLeft: .o, middleMiddle: .x, middleRight: .empty,
+                bottomLeft: .empty, bottomMiddle: .empty, bottomRight: .empty
+            )
+        }
+    }
+
 }
 

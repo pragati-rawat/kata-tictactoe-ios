@@ -8,7 +8,6 @@ import Testing
 @testable import TicTacToe
 
 final class MockGameRulesEngine: GameRulesEngineProtocol {
-
     var resultToReturn: GameResult = .ongoing
     var errorToThrow: Error?
 
@@ -20,7 +19,6 @@ final class MockGameRulesEngine: GameRulesEngineProtocol {
         if let error = errorToThrow {
             throw error
         }
-
         return resultToReturn
     }
 }

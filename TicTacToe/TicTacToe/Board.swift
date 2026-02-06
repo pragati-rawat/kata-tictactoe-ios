@@ -27,11 +27,7 @@ struct Board: Equatable {
         [0,3,6],[1,4,7],[2,5,8],
         [0,4,8],[2,4,6]
     ]
-    
-    var isFull: Bool {
-        !cells.contains(.empty)
-    }
-    
+        
     init(
         topLeft: CellState,
         topMiddle: CellState,
@@ -78,3 +74,23 @@ struct Board: Equatable {
     }
 }
 
+extension Board {
+    func cell(at row: Int, col: Int) -> CellState {
+        cells[row * 3 + col]
+    }
+    
+    func withCellSet(row: Int, col: Int, to value: CellState) -> Board {
+        var updated = cells
+        updated[row * 3 + col] = value
+        
+        return Board(
+            topLeft: updated[0], topMiddle: updated[1], topRight: updated[2],
+            middleLeft: updated[3], middleMiddle: updated[4], middleRight: updated[5],
+            bottomLeft: updated[6], bottomMiddle: updated[7], bottomRight: updated[8]
+        )
+    }
+    
+    var isFull: Bool {
+        !cells.contains(.empty)
+    }
+}

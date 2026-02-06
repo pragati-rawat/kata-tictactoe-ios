@@ -40,6 +40,20 @@ import Testing
             )
         }
     }
+    
+    @Test("Test player make move and switches turn")
+    func makeMove_placesXAndSwitchesTurn() throws {
+        let engine = MockGameRulesEngine()
+        engine.resultToReturn = .ongoing
+
+        let viewModel = GameViewModel(engine: engine)
+
+        try viewModel.makeMove(row: 0, col: 0)
+
+        #expect(viewModel.board.cell(at: 0, col: 0) == .x)
+        #expect(viewModel.currentPlayer == .o)
+        #expect(viewModel.gameResult == .ongoing)
+    }
 
 }
 
